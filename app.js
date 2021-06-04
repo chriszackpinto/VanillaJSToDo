@@ -11,10 +11,7 @@ document.addEventListener("DOMContentLoaded", getTodos);
 function addTodo(e) {
   e.preventDefault();
 
-  const todos =
-    localStorage.getItem("todos") === null
-      ? []
-      : JSON.parse(localStorage.getItem("todos"));
+  const todos = checkLocal();
 
   if (todoInput.value.length === 0) {
     todoInput.style.animation = "shake 0.5s linear";
@@ -38,11 +35,7 @@ function deleteCheck(e) {
   const todo = e.target.closest(".todo");
   if (item.classList[0] === "trash-btn") {
     todo.classList.add("fall");
-
-    const todos =
-      localStorage.getItem("todos") === null
-        ? []
-        : JSON.parse(localStorage.getItem("todos"));
+    const todos = checkLocal();
     const todoIndex = todo.children[0].innerText;
     todos.splice(todos.indexOf(todoIndex), 1); //Delete local
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -80,11 +73,13 @@ function filterTodo(e) {
   });
 }
 
+checkLocal = () =>
+  localStorage.getItem("todos") === null
+    ? []
+    : JSON.parse(localStorage.getItem("todos"));
+
 function getTodos() {
-  const todos =
-    localStorage.getItem("todos") === null
-      ? []
-      : JSON.parse(localStorage.getItem("todos"));
+  const todos = checkLocal();
   todos.forEach((todo) => todoHtml(todo));
 }
 

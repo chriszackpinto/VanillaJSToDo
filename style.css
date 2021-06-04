@@ -58,6 +58,9 @@ form {
   align-items: center;
   margin: 10px auto;
 }
+input:focus {
+  outline: none;
+}
 form input {
   flex: 1;
 }
